@@ -1,4 +1,3 @@
-// PlayerHealth.cs
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
