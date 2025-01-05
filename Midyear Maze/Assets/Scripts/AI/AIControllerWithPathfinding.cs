@@ -226,9 +226,9 @@ else
         }
     }
 
-    public void Heal(float amt)
+    public void Heal(float h)
     {
-        health += amt;
+        health += h;
         if (health > maxHealth) health = maxHealth;
     }
 

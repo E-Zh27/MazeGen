@@ -33,7 +33,6 @@ public class RandomEventManager : MonoBehaviour
         {
             yield return new WaitForSeconds(damageInterval);
 
-            // Damage both
             if (playerHealth != null)
                 playerHealth.TakeDamage(damageAmount);
 
@@ -48,7 +47,6 @@ public class RandomEventManager : MonoBehaviour
         {
             yield return new WaitForSeconds(itemSpawnInterval);
 
-            // Pick random floor cell
             Vector2Int cell = mazeGenerator.PickRandomFloorCell();
             Vector3 spawnPos = new Vector3(cell.x, 1f, cell.y);
 
