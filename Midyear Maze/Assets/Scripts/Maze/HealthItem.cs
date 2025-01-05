@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class HealthItem : MonoBehaviour
 {
-    public float healFraction = 0.25f; 
+    public float healFraction = 0.25f;
 
     void Start()
     {
@@ -17,18 +17,18 @@ public class HealthItem : MonoBehaviour
             PlayerHealth pHealth = other.GetComponent<PlayerHealth>();
             if (pHealth != null)
             {
-                float healAmt = pHealth.maxHealth * healFraction;
-                pHealth.Heal(healAmt);
+                float amount = pHealth.maxHealth * healFraction;
+                pHealth.Heal(amount);
                 Destroy(gameObject);
             }
         }
         else
         {
-            AIControllerWithPathfinding ai = other.GetComponent<AIControllerWithPathfinding>();
+            AIHealth ai = other.GetComponent<AIHealth>();
             if (ai != null)
             {
-                float healAmt = ai.maxHealth * healFraction;
-                ai.Heal(healAmt);
+                float amount = ai.maxHealth * healFraction;
+                ai.Heal(amount);
                 Destroy(gameObject);
             }
         }

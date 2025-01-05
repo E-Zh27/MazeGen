@@ -3,7 +3,7 @@ using System.Collections;
 
 public class RandomEventManager : MonoBehaviour
 {
-    public float damageInterval = 10f; 
+    public float damageInterval = 10f;
     public float damageAmount = 1f;
 
     public float itemSpawnInterval = 20f;
@@ -11,17 +11,24 @@ public class RandomEventManager : MonoBehaviour
 
     private MazeGenerator mazeGenerator;
     private PlayerHealth playerHealth;
-    private AIControllerWithPathfinding aiController;
+    private AIHealth aiHealth;
 
     void Start()
     {
         mazeGenerator = FindObjectOfType<MazeGenerator>();
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player) playerHealth = player.GetComponent<PlayerHealth>();
+        if (player)
+        {
+            playerHealth = player.GetComponent<PlayerHealth>();
+        }
 
+        // IMPORTANT: Instead of using AIController, we now look for AIHealth.
         GameObject aiObj = GameObject.Find("AI");
-        if (aiObj) aiController = aiObj.GetComponent<AIControllerWithPathfinding>();
+        if (aiObj)
+        {
+            aiHealth = aiObj.GetComponent<AIHealth>();
+        }
 
         StartCoroutine(DamageTick());
         StartCoroutine(SpawnHealthItem());
@@ -34,10 +41,14 @@ public class RandomEventManager : MonoBehaviour
             yield return new WaitForSeconds(damageInterval);
 
             if (playerHealth != null)
+            {
                 playerHealth.TakeDamage(damageAmount);
+            }
 
-            if (aiController != null)
-                aiController.TakeDamage(damageAmount);
+            if (aiHealth != null)
+            {
+                aiHealth.TakeDamage(damageAmount);
+            }
         }
     }
 

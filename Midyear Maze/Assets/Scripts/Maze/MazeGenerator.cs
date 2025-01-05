@@ -5,7 +5,6 @@ public class MazeGenerator : MonoBehaviour
 {
     public GameObject wallPrefab;
     public GameObject floorPrefab;
-
     public GameObject playerPrefab;
     public GameObject aiPrefab;
     public GameObject exitPrefab;
@@ -23,7 +22,6 @@ public class MazeGenerator : MonoBehaviour
     {
         InitializeGrid();
         GenerateMaze();
-
         DrawMaze();
 
         playerStartPos = PickRandomFloorCell();
@@ -75,14 +73,10 @@ public class MazeGenerator : MonoBehaviour
 
     void AddWallsToList(int x, int y)
     {
-        if (x - 2 > 0)
-            wallList.Add(new Vector2Int(x - 1, y));
-        if (x + 2 < width - 1)
-            wallList.Add(new Vector2Int(x + 1, y));
-        if (y - 2 > 0)
-            wallList.Add(new Vector2Int(x, y - 1));
-        if (y + 2 < height - 1)
-            wallList.Add(new Vector2Int(x, y + 1));
+        if (x - 2 > 0) wallList.Add(new Vector2Int(x - 1, y));
+        if (x + 2 < width - 1) wallList.Add(new Vector2Int(x + 1, y));
+        if (y - 2 > 0) wallList.Add(new Vector2Int(x, y - 1));
+        if (y + 2 < height - 1) wallList.Add(new Vector2Int(x, y + 1));
     }
 
     void ProcessWall(Vector2Int wall)
@@ -136,24 +130,26 @@ public class MazeGenerator : MonoBehaviour
     }
 
     void DrawMaze()
-{
-    for (int x = 0; x < width; x++)
     {
-        for (int y = 0; y < height; y++)
+        for (int x = 0; x < width; x++)
         {
-            Vector3 position = new Vector3(x , 0, y);
+            for (int y = 0; y < height; y++)
+            {
+                Vector3 position = new Vector3(x, 0, y);
 
-            if (grid[x, y].IsWall)
-            {
-                Instantiate(wallPrefab, position, Quaternion.identity, transform);
-            }
-            else
-            {
-                Instantiate(floorPrefab, position, Quaternion.identity, transform);
+                if (grid[x, y].IsWall)
+                {
+                    // Instantiate the wall and tag it as "Wall"
+                    GameObject wallObj = Instantiate(wallPrefab, position, Quaternion.identity, transform);
+                    wallObj.tag = "Wall";  // <-- auto-tag the wall
+                }
+                else
+                {
+                    Instantiate(floorPrefab, position, Quaternion.identity, transform);
+                }
             }
         }
     }
-}
 
     public Vector2Int PickRandomFloorCell()
     {
@@ -169,80 +165,70 @@ public class MazeGenerator : MonoBehaviour
         }
     }
 
-
-private Vector2Int FindFurthestCellFrom(Vector2Int startCell)
-{
-    int[,] distance = new int[width, height];
-    for (int x = 0; x < width; x++)
+    private Vector2Int FindFurthestCellFrom(Vector2Int startCell)
     {
-        for (int y = 0; y < height; y++)
+        int[,] distance = new int[width, height];
+        for (int x = 0; x < width; x++)
         {
-            distance[x, y] = -1;
-        }
-    }
-
-    Queue<Vector2Int> queue = new Queue<Vector2Int>();
-
-    queue.Enqueue(startCell);
-    distance[startCell.x, startCell.y] = 0;
-
-    Vector2Int furthestCell = startCell;
-    int maxDist = 0;
-
-    int[] dx = { 1, -1, 0, 0 };
-    int[] dy = { 0,  0, 1,-1 };
-
-    while (queue.Count > 0)
-    {
-        Vector2Int current = queue.Dequeue();
-        int curDist = distance[current.x, current.y];
-
-        if (curDist > maxDist)
-        {
-            maxDist = curDist;
-            furthestCell = current;
-        }
-
-        for (int i = 0; i < 4; i++)
-        {
-            int nx = current.x + dx[i];
-            int ny = current.y + dy[i];
-
-            if (nx < 0 || nx >= width || ny < 0 || ny >= height)
-                continue;
-
-            if (!grid[nx, ny].IsWall && distance[nx, ny] == -1)
+            for (int y = 0; y < height; y++)
             {
-                distance[nx, ny] = curDist + 1;
-                queue.Enqueue(new Vector2Int(nx, ny));
+                distance[x, y] = -1;
             }
         }
+
+        Queue<Vector2Int> queue = new Queue<Vector2Int>();
+        queue.Enqueue(startCell);
+        distance[startCell.x, startCell.y] = 0;
+
+        Vector2Int furthestCell = startCell;
+        int maxDist = 0;
+
+        int[] dx = { 1, -1, 0, 0 };
+        int[] dy = { 0, 0, 1, -1 };
+
+        while (queue.Count > 0)
+        {
+            Vector2Int current = queue.Dequeue();
+            int curDist = distance[current.x, current.y];
+
+            if (curDist > maxDist)
+            {
+                maxDist = curDist;
+                furthestCell = current;
+            }
+
+            for (int i = 0; i < 4; i++)
+            {
+                int nx = current.x + dx[i];
+                int ny = current.y + dy[i];
+
+                if (nx < 0 || nx >= width || ny < 0 || ny >= height)
+                    continue;
+
+                if (!grid[nx, ny].IsWall && distance[nx, ny] == -1)
+                {
+                    distance[nx, ny] = curDist + 1;
+                    queue.Enqueue(new Vector2Int(nx, ny));
+                }
+            }
+        }
+
+        return furthestCell;
     }
-
-    return furthestCell;
-}
-
 
     void SpawnEntities(Vector2Int playerPos, Vector2Int aiPos)
     {
-        // Player
         Vector3 pPos = new Vector3(playerPos.x, 1f, playerPos.y);
         GameObject playerObj = Instantiate(playerPrefab, pPos, Quaternion.identity);
         playerObj.tag = "Player";
 
-        // AI
         Vector3 aPos = new Vector3(aiPos.x, 1f, aiPos.y);
         GameObject aiObj = Instantiate(aiPrefab, aPos, Quaternion.identity);
         aiObj.name = "AI";
 
-      
-        
         Vector2Int exitCell = FindFurthestCellFrom(playerPos);
-        
         Vector3 exitPos = new Vector3(exitCell.x, 1f, exitCell.y);
         GameObject exitObj = Instantiate(exitPrefab, exitPos, Quaternion.identity);
         exitObj.name = "Exit";
-
-       
     }
 }

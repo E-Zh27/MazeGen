@@ -1,8 +1,9 @@
 using UnityEngine;
 
+[RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 6.0f;
+    public float speed = 3.0f;
     public float jumpHeight = 1.0f;
     public float gravity = -9.81f;
     public float turnSmoothTime = 0.1f;
@@ -32,6 +33,11 @@ public class PlayerController : MonoBehaviour
 
            
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+
+            if (Input.GetKey(KeyCode.LeftShift))
+                controller.Move(moveDir.normalized * sprintSpeed * Time.deltaTime);
+            else
+                controller.Move(moveDir.normalized * speed * Time.deltaTime);
             
         }
 
