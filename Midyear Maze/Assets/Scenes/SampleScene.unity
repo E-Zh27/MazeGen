@@ -417,9 +417,15 @@ MonoBehaviour:
   floorPrefab: {fileID: 3233514239202558793, guid: 8452033092ae64b17a117b13d5f51df1, type: 3}
   playerPrefab: {fileID: 1064103958221684423, guid: 75b8cda26c4ac42b8acbda5f276d5f0b, type: 3}
   aiPrefab: {fileID: 4061999138098054953, guid: c0ec2cd63f93487d92d6623d393c83ba, type: 3}
+<<<<<<< HEAD
   exitPrefab: {fileID: 919132149155446097, guid: 322f3ac1008abeb469dc83ee1e4ab54c, type: 3}
   width: 75
   height: 75
+=======
+  exitPrefab: {fileID: 3093467346926377928, guid: 9c71a63feb7b84fa1bf99130c242db62, type: 3}
+  width: 25
+  height: 25
+>>>>>>> af71208f74b857e202597f0e05d8a815624697be
   playerStartPos: {x: 0, y: 0}
   aiStartPos: {x: 0, y: 0}
 --- !u!1660057539 &9223372036854775807
