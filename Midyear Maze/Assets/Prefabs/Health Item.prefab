@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 534293560429670814}
   m_Layer: 0
   m_Name: Health Item
-  m_TagString: Untagged
+  m_TagString: HealthBar
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26,7 +26,11 @@ Transform:
   m_GameObject: {fileID: 516711853988848479}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+ HEAD
   m_LocalPosition: {x: 0, y: 0, z: 0}
+
+  m_LocalPosition: {x: -80.70005, y: -6.655167, z: -3.4252539}
+ 8875edcc72d11d0281e83988002247190e5044da
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
