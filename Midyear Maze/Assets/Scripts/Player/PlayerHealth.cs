@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
+
 public class PlayerHealth : MonoBehaviour
 {
     public float health = 10f;
@@ -22,7 +24,10 @@ public class PlayerHealth : MonoBehaviour
         healthBar.value = health;
 
         if (health <= 0)
+        {
             Destroy(gameObject);  
+            SceneManager.LoadScene(3);
+        }
         else
             StartCoroutine(DamageCooldown()); 
     }
