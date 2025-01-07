@@ -1,33 +1,48 @@
 using UnityEngine;
-
+using UnityEngine.UI;
+using System.Collections;
 public class PlayerHealth : MonoBehaviour
 {
+    public float health = 10f;
+    public Slider healthBar;
+    private bool canTakeDamage = true;
+    public float damageCooldown = 1.5f; 
+
     public float maxHealth = 10f;
-    public float currentHealth;
 
     void Start()
     {
-        currentHealth = maxHealth;
+        healthBar.maxValue = health;
+        healthBar.value = health;
     }
 
-    public void TakeDamage(float dmg)
+    public void TakeDamage(float damage)
     {
-        currentHealth -= dmg;
-        if (currentHealth <= 0f)
-        {
-            currentHealth = 0f;
-            Die();
-        }
+        health -= damage;
+        healthBar.value = health;
+
+        if (health <= 0)
+            Destroy(gameObject);  
+        else
+            StartCoroutine(DamageCooldown()); 
+    }
+
+    private IEnumerator DamageCooldown()
+    {
+        canTakeDamage = false;
+        yield return new WaitForSeconds(damageCooldown);
+        canTakeDamage = true;
     }
 
     public void Heal(float amt)
     {
-        currentHealth += amt;
-        if (currentHealth > maxHealth) currentHealth = maxHealth;
-    }
+        health += amt;
+        if (health > maxHealth) 
+            health = maxHealth;
+        healthBar.value = health;
 
-    void Die()
-    {
-        Debug.Log("Player died!");
     }
 }
+
+
+
