@@ -235,9 +235,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4828101513170791392}
   - component: {fileID: 6763397528136692365}
-  - component: {fileID: 465950442352477552}
-  - component: {fileID: 6442494368935138308}
-  - component: {fileID: -239248412012284453}
+  - component: {fileID: 2613089090856523453}
+  - component: {fileID: 6173541713765009075}
+  - component: {fileID: 8749638585894483498}
   m_Layer: 0
   m_Name: sky_protectiv_suit_rig_UNITY 1
   m_TagString: Player
@@ -287,7 +287,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!143 &465950442352477552
+--- !u!143 &2613089090856523453
 CharacterController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -312,8 +312,8 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1.5, z: 0}
---- !u!114 &6442494368935138308
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6173541713765009075
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -329,8 +329,8 @@ MonoBehaviour:
   jumpHeight: 1
   gravity: -9.81
   turnSmoothTime: 0.1
-  cameraTransform: {fileID: 7955523323672401803}
---- !u!114 &-239248412012284453
+  cameraTransform: {fileID: 7155494608682200256}
+--- !u!114 &8749638585894483498
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1788,6 +1788,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7155494608682200256}
   - component: {fileID: 6753545309509849343}
+  - component: {fileID: 5096329977596416827}
   m_Layer: 0
   m_Name: Sk_Protective_suit_Head
   m_TagString: Untagged
@@ -1931,6 +1932,32 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.00014641508, y: -0.013276517, z: 1.6765103}
     m_Extent: {x: 0.09548688, y: 0.1046785, z: 0.15281194}
   m_DirtyAABB: 0
+--- !u!143 &5096329977596416827
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5921444921138213487}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 0.00182
+  m_Radius: 0.018293219
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5956983523613002480
 GameObject:
   m_ObjectHideFlags: 0
@@ -2022,7 +2049,7 @@ Transform:
   m_GameObject: {fileID: 6048653153510185196}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.075105, y: 3.4651833, z: -41.488422}
+  m_LocalPosition: {x: 5.075105, y: 3.465, z: -41.488422}
   m_LocalScale: {x: 3.333333, y: 3.333333, z: 3.333333}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2099,7 +2126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91b19281e066649afa0d7de64d5151ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 4828101513170791392}
+  target: {fileID: 7155494608682200256}
   offset: {x: 0, y: 0, z: 0}
   rotationSpeed: 3
   smoothSpeed: 0.125
