@@ -9,6 +9,8 @@ public class PlayerHealth : MonoBehaviour
     public Slider healthBar;
     private bool canTakeDamage = true;
     public float damageCooldown = 1.5f; 
+    public AudioSource audioData;
+
 
     public float maxHealth = 10f;
 
@@ -25,6 +27,8 @@ public class PlayerHealth : MonoBehaviour
 
         if (health <= 0)
         {
+            audioData = GetComponent<AudioSource>();
+            audioData.Play(0);
             Destroy(gameObject);  
             SceneManager.LoadScene(3);
         }
