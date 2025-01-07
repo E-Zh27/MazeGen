@@ -44,12 +44,16 @@ public class PlayerHealth : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision collision)
+{
+    Debug.Log($"Collision detected with: {collision.gameObject.name}");
+
+    if (collision.gameObject.CompareTag("AI"))
     {
-        if (collision.gameObject.CompareTag("AI"))
-        {
-            Destroy(gameObject); 
-        }
+        Debug.Log("Collided with AI. Destroying player.");
+        Destroy(gameObject); // Destroy the player
     }
+}
+
 }
 
 
