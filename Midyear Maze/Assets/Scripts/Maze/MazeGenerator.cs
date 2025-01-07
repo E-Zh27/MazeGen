@@ -218,10 +218,12 @@ public class MazeGenerator : MonoBehaviour
 
     void SpawnEntities(Vector2Int playerPos, Vector2Int aiPos)
     {
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
+    {
         Vector3 pPos = new Vector3(playerPos.x, 1f, playerPos.y);
-        GameObject playerObj = Instantiate(playerPrefab, pPos, Quaternion.identity);
-        playerObj.tag = "Player";
-
+        playerObj.transform.position = pPos;
+    }
         Vector3 aPos = new Vector3(aiPos.x, 1f, aiPos.y);
         GameObject aiObj = Instantiate(aiPrefab, aPos, Quaternion.identity);
         aiObj.name = "AI";
