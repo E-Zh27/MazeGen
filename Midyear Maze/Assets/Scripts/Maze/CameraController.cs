@@ -2,74 +2,63 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public Transform target;
-    public Vector3 offset;
+    public Transform target;       // The player to follow
+    public Vector3 offset;         // Offset from the player
     public float rotationSpeed = 5.0f;
     public float smoothSpeed = 0.125f;
-    public float cameraCollisionRadius = 0.2f;   // how “thick” the camera collision is
-    public LayerMask collisionMask;             // layer(s) for walls/obstacles
-
-    private float yaw = 0f;
-    private float pitch = 0f;
-    private float minPitch = -180f;
-    private float maxPitch = 120f;
+    private float yaw = 0f;        // Horizontal rotation around the player
+    private float pitch = 0f;      // Vertical rotation around the player
+    private float minPitch = -90f; // Minimum pitch angle for first-person
+    private float maxPitch = 90f;  // Maximum pitch angle for first-person
 
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Locked; // Lock the cursor
     }
 
     void LateUpdate()
     {
         HandleMouseRotation();
-        AlignPlayerWithCamera();
-        FollowPlayer();
+
+        if (offset.magnitude > 0) // Third-person view
+        {
+            FollowPlayerWithOffset();
+        }
+        else // First-person view
+        {
+            FollowPlayerDirectly();
+        }
     }
 
-    void HandleMouseRotation()
+    private void HandleMouseRotation()
     {
         float mouseX = Input.GetAxis("Mouse X") * rotationSpeed;
-        float mouseY = Input.GetAxis("Mouse Y") * rotationSpeed;
+        float mouseY = -Input.GetAxis("Mouse Y") * rotationSpeed; // Inverted mouse fix
+
         yaw += mouseX;
-        pitch += mouseY;
+        pitch += mouseY; // Fixed to be non-inverted
         pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
 
-        Quaternion rotation = Quaternion.Euler(pitch, yaw, 0);
-
-        // Ideal position ignoring walls
-        Vector3 desiredPos = target.position + rotation * offset;
-
-        // Adjust for camera collision
-        Vector3 actualPos = CheckWallCollision(target.position, desiredPos);
-
-        transform.position = actualPos;
-        transform.LookAt(target);
-    }
-
-    void AlignPlayerWithCamera()
-    {
-        Vector3 camForward = new Vector3(transform.forward.x, 0, transform.forward.z).normalized;
-        target.rotation = Quaternion.LookRotation(camForward);
-    }
-
-    void FollowPlayer()
-    {
-        // You can optionally do a smoothing step here if you want
-        // But we already handle smoothing or camera collision in CheckWallCollision
-    }
-
-    Vector3 CheckWallCollision(Vector3 startPos, Vector3 desiredCamPos)
-    {
-        Vector3 dir = desiredCamPos - startPos;
-        float dist = dir.magnitude;
-        dir.Normalize();
-
-        // If we hit something, shorten the distance
-        if (Physics.SphereCast(startPos, cameraCollisionRadius, dir, out RaycastHit hit, dist, collisionMask))
+        if (offset.magnitude == 0) // First-person view
         {
-            // Position the camera just in front of the obstacle
-            return hit.point - dir * cameraCollisionRadius;
+            target.rotation = Quaternion.Euler(pitch, yaw, 0f);
         }
-        return desiredCamPos;
+        else // Third-person view
+        {
+            transform.rotation = Quaternion.Euler(pitch, yaw, 0f);
+        }
+    }
+
+    private void FollowPlayerWithOffset()
+    {
+        Vector3 desiredPosition = target.position + Quaternion.Euler(pitch, yaw, 0) * offset;
+        transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
+        transform.LookAt(target.position);
+    }
+
+    private void FollowPlayerDirectly()
+    {
+        transform.position = target.position; // Match the target's position exactly
+        transform.rotation = Quaternion.Euler(pitch, yaw, 0); // Use camera rotation
     }
 }

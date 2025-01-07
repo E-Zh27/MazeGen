@@ -1,9 +1,8 @@
 using UnityEngine;
 
-[RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 3.0f;
+    public float speed = 6.0f;
     public float jumpHeight = 1.0f;
     public float gravity = -9.81f;
     public float turnSmoothTime = 0.1f;

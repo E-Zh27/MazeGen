@@ -23,7 +23,6 @@ public class RandomEventManager : MonoBehaviour
             playerHealth = player.GetComponent<PlayerHealth>();
         }
 
-        // IMPORTANT: Instead of using AIController, we now look for AIHealth.
         GameObject aiObj = GameObject.Find("AI");
         if (aiObj)
         {
