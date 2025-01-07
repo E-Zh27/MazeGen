@@ -4,9 +4,9 @@ using System.Collections;
 public class RandomEventManager : MonoBehaviour
 {
     public float damageInterval = 10f;
-    public float damageAmount = 1f;
+    public float damageAmount = .5f;
 
-    public float itemSpawnInterval = 20f;
+    public float itemSpawnInterval = 30f;
     public GameObject healthItemPrefab;
 
     private MazeGenerator mazeGenerator;

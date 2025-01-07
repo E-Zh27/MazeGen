@@ -42,6 +42,14 @@ public class PlayerHealth : MonoBehaviour
         healthBar.value = health;
 
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("AI"))
+        {
+            Destroy(gameObject); 
+        }
+    }
 }
 
 
