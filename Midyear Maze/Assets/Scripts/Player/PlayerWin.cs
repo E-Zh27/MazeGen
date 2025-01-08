@@ -5,10 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class PlayerWin : MonoBehaviour
 {
-    public void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
+        if (other.CompareTag("Player")){
+            Debug.Log("Exit Worked");
             SceneManager.LoadScene(4);
         }
     }
